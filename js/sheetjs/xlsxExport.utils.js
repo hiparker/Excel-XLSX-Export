@@ -97,8 +97,6 @@ XSExport.setWorkbookStyle = function(wb,sheetName){
 	XSU.setTitleStylesDefault(wb,sheetName);
 	//设置B 行 小标题 默认样式 必须最后设置 否则可能会被其他覆盖
 	XSU.setSecondRowStylesDefault(wb,sheetName);
-	
-	console.log(wb);
 }
 
 
