@@ -1,0 +1,95 @@
+<html lang="zh">
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="Parker Zhou">
+		<title>JavaScript导出Excel</title>
+    </head>
+ 
+    <body link="blue" vlink="purple">
+		<div style="margin:50 auto;width:90%">
+			<table id="print-content" border="1" cellpadding="0" cellspacing="0" style='border-collapse:collapse;table-layout:fixed;'></table>
+			
+			<br>
+			<!-- 超链接_导出文件-->
+			<input type="button" onclick="excelExport()" value="导出表格" ></input>
+		<div>
+		
+        <!-- 引入文件保存js-->
+        <script src="js/sheetjs/xlsx.core.min.js" ></script>
+		<script src="js/sheetjs/xlsxStyle.core.min.js" ></script>
+		<script src="js/sheetjs/xlsxStyle.utils.js" ></script>
+		<script src="js/sheetjs/xlsxExport.utils.js" ></script>
+        <script>
+			// 数据
+			var data = {
+				"success":true,
+				"errorCode":"-1",
+				"msg":"导出成功",
+				"body":{
+					"title":"个人信息",
+					"excelData":[
+						["序号","姓名","年龄","性别","手机","邮箱","金额","创建日期"],
+						[1,"周一",28,"男","13888888881","1@q.com",4123.3,"2020-05-01"],
+						[2,"崔二",25,"女","13888888882","2@q.com",23432,"2020-05-03"],
+						[3,"张三",15,"男","13888888883","3@q.com",433.14,"2020-05-02"],
+						[4,"李四",27,"男","13888888884","4@q.com",6523,"2020-05-01"],
+						[5,"王五",18,"男","13888888885","5@q.com",411.36,"2020-05-04"],
+						[6,"赵六",21,"男","13888888886","6@q.com",1234,"2020-05-08"],
+						[7,"唐七",22,"女","13888888887","7@q.com",4321.75,"2020-05-05"],
+						[8,"范八",19,"男","13888888888","8@q.com",4322,"2020-05-06"],
+						[9,"薛九",31,"女","13888888889","9@q.com",56465,"2020-05-01"],
+						[10,"闫十",45,"男","13888888810","10@q.com",7864,"2020-05-07"]
+					]
+				}
+			};	
+			
+			// 导出excel
+			function excelExport(){
+				console.log(data);
+				if(data.success){
+					if(null != data.body && undefined != data.body){
+						// 导出excel
+						XSExport.excelExport(
+							data.body.excelData,
+							data.body.title
+						);
+					}
+				}
+			}
+			
+			
+			
+			
+			// ---------------------------------------------------------------------------------
+			// 以下不重要
+			
+			// 页面测试展示使用 - 创建页面表格
+			function createTableElement(data){
+				var tableBodyHtml = "<tr><td colspan='"+data.body.excelData[0].length+"' style='text-align: center;font-size:22px;font-family: Arial;font-weight: bold;height: 40px;'>"+data.body.title+"</td></tr>";
+				// 生成Element
+				data.body.excelData.forEach(function(val,index){
+					var trBodyHtml = '<tr height="20" style="text-align: center;font-size:12px">';
+					val.forEach(function(value){
+						// 第一行小标题
+						if(0 === index){
+							trBodyHtml += '<td style="font-weight: bold;background-color:#808080;color:#ffffff">';
+							trBodyHtml += '<div title="'+value+'" style="width: 125px;height: 16px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">'+value+'</div>';
+							trBodyHtml += '</td>';
+						}else{
+							trBodyHtml += '<td style="">';
+							trBodyHtml += '<div title="'+value+'" style="width: 125px;height: 16px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">'+value+'</div>';
+							trBodyHtml += '</td>';
+						}
+					});
+					trBodyHtml += '</tr>';
+					tableBodyHtml += trBodyHtml;
+				});
+				document.querySelector('#print-content').innerHTML  = tableBodyHtml;
+			}
+			createTableElement(data);
+			
+        </script>
+    </body>
+</html>
